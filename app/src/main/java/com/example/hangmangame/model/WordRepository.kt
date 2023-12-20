@@ -2,6 +2,7 @@ package com.example.hangmangame.model
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 
 class WordRepository(context: Context) {
 
@@ -39,10 +40,29 @@ class WordRepository(context: Context) {
     }
 
     fun getGameCount(): Int {
-        return sharedPreferences.getInt(GAME_COUNT_KEY, 0)
+        return try {
+            sharedPreferences.getInt(GAME_COUNT_KEY, 0)
+        } catch (e: ClassCastException) {
+            handleSharedPreferencesException(e)
+            0
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+            0
+        }
     }
 
     fun resetGameCount() {
-        sharedPreferences.edit().putInt(GAME_COUNT_KEY, 0).apply()
+        try {
+            sharedPreferences.edit().putInt(GAME_COUNT_KEY, 0).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+
+    private fun handleSharedPreferencesException(exception: Exception) {
+        Log.e(
+            "SharedPreferencesError",
+            "An error occurred with SharedPreferences: ${exception.message}"
+        )
     }
 }
