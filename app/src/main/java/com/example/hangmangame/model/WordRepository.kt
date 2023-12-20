@@ -14,9 +14,11 @@ class WordRepository(context: Context) {
     companion object {
         const val PREF_NAME = "HangmanPreferences"
         const val GAME_COUNT_KEY = "gameCount"
+        const val VICTORY_COUNT_KEY = "victoryCount"
+        const val ATTEMPTS_LEFT_KEY = "attemptsLeft"
     }
 
-    fun getStoredWords(): List<Word> {
+    private fun getStoredWords(): List<Word> {
         return listOf(
             Word("Hello"),
             Word("Amazing"),
@@ -35,8 +37,20 @@ class WordRepository(context: Context) {
         if (storedWords.isEmpty()) {
             throw NoSuchElementException("No words available.")
         }
-        val randomIndex = (0 until storedWords.size).random()
+        val randomIndex = (storedWords.indices).random()
         return storedWords[randomIndex]
+    }
+
+    fun getPartialWord(word: Word, correctGuesses: List<Char>): String {
+        val partialWord = StringBuilder()
+        for (char in word.value) {
+            if (correctGuesses.contains(char)) {
+                partialWord.append(char)
+            } else {
+                partialWord.append('_')
+            }
+        }
+        return partialWord.toString()
     }
 
     fun getGameCount(): Int {
@@ -59,10 +73,54 @@ class WordRepository(context: Context) {
         }
     }
 
-    private fun handleSharedPreferencesException(exception: Exception) {
-        Log.e(
-            "SharedPreferencesError",
-            "An error occurred with SharedPreferences: ${exception.message}"
-        )
+    fun getVictoryCount(): Int {
+        return try {
+            sharedPreferences.getInt(VICTORY_COUNT_KEY, 0)
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+            0
+        }
     }
+
+    fun getAttemptsLeft(): Int {
+        return try {
+            sharedPreferences.getInt(ATTEMPTS_LEFT_KEY, 10)
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+            10
+        }
+    }
+
+    fun incrementVictoryCount() {
+        try {
+            val currentCount = sharedPreferences.getInt(VICTORY_COUNT_KEY, 0)
+            sharedPreferences.edit().putInt(VICTORY_COUNT_KEY, currentCount + 1).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+
+    fun decrementAttemptsLeft() {
+        try {
+            val currentAttempts = sharedPreferences.getInt(ATTEMPTS_LEFT_KEY, 10)
+            sharedPreferences.edit().putInt(ATTEMPTS_LEFT_KEY, currentAttempts - 1).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+
+    fun resetAttemptsLeft() {
+        try {
+            sharedPreferences.edit().putInt(ATTEMPTS_LEFT_KEY, 10).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+}
+
+private fun handleSharedPreferencesException(exception: Exception) {
+    Log.e(
+        "SharedPreferencesError",
+        "An error occurred with SharedPreferences: ${exception.message}"
+    )
 }
