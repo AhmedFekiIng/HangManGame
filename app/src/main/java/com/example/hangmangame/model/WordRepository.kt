@@ -41,11 +41,11 @@ class WordRepository(context: Context) {
         return storedWords[randomIndex]
     }
 
-    fun getPartialWord(word: Word, correctGuesses: List<Char>): String {
+    fun getPartialWord(word: Word, correctGuesses: Map<Int, Char>): String {
         val partialWord = StringBuilder()
-        for ((index, char) in word.value.withIndex()) {
-            val lowerCaseChar = char.lowercaseChar()
-            if (correctGuesses.getOrNull(index)?.lowercaseChar() == lowerCaseChar) {
+        for (index in word.value.indices) {
+            val char = word.value[index].lowercaseChar()
+            if (correctGuesses.containsKey(index) && correctGuesses[index] == char) {
                 partialWord.append(char)
             } else {
                 partialWord.append('_').append(' ')

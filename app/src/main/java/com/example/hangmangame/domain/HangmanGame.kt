@@ -7,7 +7,7 @@ class HangmanGame(private var word: Word)
 {
 
     private var actualWord: String = word.value
-    private var correctGuesses: MutableList<Char> = mutableListOf()
+    private var correctGuesses: MutableMap<Int,Char> = mutableMapOf()
     private var incorrectAttempts: Int = 0
     private val maxAttempts: Int = 10
 
@@ -33,7 +33,7 @@ class HangmanGame(private var word: Word)
         for ((index, letter) in word.withIndex()) {
             val actualLetter = this.word.value.getOrNull(index)?.lowercaseChar()
             if (actualLetter != null && (actualLetter.equals(letter.lowercaseChar(), ignoreCase = true) || actualLetter == letter.lowercaseChar())) {
-                correctGuesses.add(letter)
+                correctGuesses[index] = letter.lowercaseChar()
             }
         }
         wordRepository.decrementAttemptsLeft()
@@ -50,7 +50,7 @@ class HangmanGame(private var word: Word)
         incorrectAttempts = 0
         return GameState.IN_PROGRESS
     }
-    fun getCorrectGuesses(): List<Char> {
+    fun getCorrectGuesses(): Map<Int,Char> {
         return correctGuesses
     }
 

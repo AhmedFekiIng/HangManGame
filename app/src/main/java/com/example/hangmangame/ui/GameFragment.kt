@@ -1,4 +1,4 @@
-package com.example.hangmangame
+package com.example.hangmangame.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.example.hangmangame.R
 import com.example.hangmangame.domain.GameState
 import com.example.hangmangame.domain.HangmanGame
 import com.example.hangmangame.model.Word
