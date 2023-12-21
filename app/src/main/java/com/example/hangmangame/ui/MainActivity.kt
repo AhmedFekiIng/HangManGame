@@ -1,7 +1,8 @@
-package com.example.hangmangame
+package com.example.hangmangame.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.hangmangame.R
 
 class MainActivity : AppCompatActivity() {
 
