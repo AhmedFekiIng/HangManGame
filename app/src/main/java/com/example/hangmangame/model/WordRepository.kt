@@ -43,8 +43,9 @@ class WordRepository(context: Context) {
 
     fun getPartialWord(word: Word, correctGuesses: List<Char>): String {
         val partialWord = StringBuilder()
-        for (char in word.value) {
-            if (correctGuesses.contains(char)) {
+        for ((index, char) in word.value.withIndex()) {
+            val lowerCaseChar = char.lowercaseChar()
+            if (correctGuesses.getOrNull(index)?.lowercaseChar() == lowerCaseChar) {
                 partialWord.append(char)
             } else {
                 partialWord.append('_').append(' ')

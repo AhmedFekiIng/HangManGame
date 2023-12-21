@@ -44,7 +44,7 @@ class GameFragment : Fragment() {
         guessButton = view.findViewById(R.id.guessButton)
         resetButton = view.findViewById(R.id.resetButton)
 
-            initializeGame()
+        initializeGame()
 
         return view
     }
@@ -79,6 +79,7 @@ class GameFragment : Fragment() {
         updateUI()
 
     }
+
     private fun resetGame() {
         gameController.resetGameCount()
         gameController.resetVictoryCount()
@@ -87,7 +88,8 @@ class GameFragment : Fragment() {
     }
 
     private fun updateUI() {
-        nbVictoriesTextView.text = getString(R.string.nb_victories, gameController.getVictoryCount())
+        nbVictoriesTextView.text =
+            getString(R.string.nb_victories, gameController.getVictoryCount())
         nbGamesTextView.text = getString(R.string.nb_games, gameController.getGameCount())
         instructionsTextView.text =
             getString(R.string.instructions, gameController.getAttemptsLeft())
@@ -121,7 +123,7 @@ class GameFragment : Fragment() {
             }
 
         val alert = dialogBuilder.create()
-        alert.setTitle(if(isWinner) "Congratulations" else "Game Over")
+        alert.setTitle(if (isWinner) "Congratulations" else "Game Over")
         alert.show()
     }
 }
