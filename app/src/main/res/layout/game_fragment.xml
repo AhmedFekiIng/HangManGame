@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/nbVictoriesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/nb_victories" />
+
+    <TextView
+        android:id="@+id/nbGamesTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nbVictoriesTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/nb_games" />
+
+    <TextView
+        android:id="@+id/partialWordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nbGamesTextView"
+        android:layout_marginTop="16dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/instructionsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/instructions"
+        android:layout_below="@id/partialWordTextView"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/guessEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Enter your guess"
+        android:layout_below="@id/instructionsTextView"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/guessButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Guess"
+        android:layout_below="@id/guessEditText"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_below="@id/guessButton"
+        android:layout_marginTop="16dp"
+        android:text="" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Game"
+        android:layout_below="@id/resultTextView"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>

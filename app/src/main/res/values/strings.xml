@@ -6,6 +6,10 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="nb_victories">NB VICTORIES: %1$d</string>
+    <string name="nb_games">NB Games: %1$d</string>
+    <string name="instructions">Try to guess the word! You have %1$d tries left...</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
