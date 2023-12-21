@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,33 +48,28 @@
         android:id="@+id/guessEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Enter your guess"
         android:layout_below="@id/instructionsTextView"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:hint="@string/enter_your_guess"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:textColorHint="#8D6E63"
+        android:autofillHints=""
+        tools:ignore="VisualLintTextFieldSize" />
 
     <Button
         android:id="@+id/guessButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Guess"
+        android:text="@string/guess"
         android:layout_below="@id/guessEditText"
         android:layout_marginTop="16dp"/>
-
-    <TextView
-        android:id="@+id/resultTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_below="@id/guessButton"
-        android:layout_marginTop="16dp"
-        android:text="" />
 
     <Button
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset Game"
-        android:layout_below="@id/resultTextView"
+        android:text="@string/reset_game"
+        android:layout_below="@id/guessButton"
         android:layout_marginTop="16dp"/>
 </RelativeLayout>

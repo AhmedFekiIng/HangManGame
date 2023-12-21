@@ -47,7 +47,7 @@ class WordRepository(context: Context) {
             if (correctGuesses.contains(char)) {
                 partialWord.append(char)
             } else {
-                partialWord.append('_')
+                partialWord.append('_').append(' ')
             }
         }
         return partialWord.toString()
@@ -68,6 +68,14 @@ class WordRepository(context: Context) {
     fun resetGameCount() {
         try {
             sharedPreferences.edit().putInt(GAME_COUNT_KEY, 0).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+
+    fun resetVictoryCount() {
+        try {
+            sharedPreferences.edit().putInt(VICTORY_COUNT_KEY, 0).apply()
         } catch (e: Exception) {
             handleSharedPreferencesException(e)
         }
@@ -99,6 +107,16 @@ class WordRepository(context: Context) {
             handleSharedPreferencesException(e)
         }
     }
+
+    fun incrementGameCount() {
+        try {
+            val currentCount = sharedPreferences.getInt(GAME_COUNT_KEY, 0)
+            sharedPreferences.edit().putInt(GAME_COUNT_KEY, currentCount + 1).apply()
+        } catch (e: Exception) {
+            handleSharedPreferencesException(e)
+        }
+    }
+
 
     fun decrementAttemptsLeft() {
         try {

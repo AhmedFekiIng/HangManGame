@@ -24,7 +24,6 @@ class GameFragment : Fragment() {
     private lateinit var partialWordTextView: TextView
     private lateinit var guessEditText: EditText
     private lateinit var guessButton: Button
-    private lateinit var resultTextView: TextView
     private lateinit var resetButton: Button
 
     private val gameController: GameController by lazy {
@@ -43,7 +42,6 @@ class GameFragment : Fragment() {
         partialWordTextView = view.findViewById(R.id.partialWordTextView)
         guessEditText = view.findViewById(R.id.guessEditText)
         guessButton = view.findViewById(R.id.guessButton)
-        resultTextView = view.findViewById(R.id.resultTextView)
         resetButton = view.findViewById(R.id.resetButton)
 
             initializeGame()
@@ -96,7 +94,6 @@ class GameFragment : Fragment() {
 
         partialWordTextView.text = gameController.getPartialWord()
 
-        resultTextView.text = ""
         guessEditText.text.clear()
     }
 
@@ -120,9 +117,6 @@ class GameFragment : Fragment() {
             .setPositiveButton("NEW GAME") { dialog, _ ->
                 gameController.startNewGame()
                 updateUI()
-                dialog.dismiss()
-            }
-            .setNegativeButton("CANCEL") { dialog, _ ->
                 dialog.dismiss()
             }
 

@@ -1,5 +1,6 @@
 package com.example.hangmangame.domain
 
+import android.util.Log
 import com.example.hangmangame.model.Word
 import com.example.hangmangame.model.WordRepository
 
@@ -16,32 +17,37 @@ class HangmanGame(private var word: Word)
         return actualWord
     }
 
-    fun makeGuess(letter: Char, wordRepository: WordRepository): GameState {
-        if (isLetterGuessed(letter)) {
-            return GameState.ALREADY_GUESSED
+    fun makeGuess(word: String, wordRepository: WordRepository): GameState {
+        if (isWordGuessed(word)) {
+            Log.d("HangmanCall", "isWordGuessed HangmanGame")
+            wordRepository.incrementVictoryCount()
+            wordRepository.incrementGameCount()
+            wordRepository.resetAttemptsLeft()
+            return GameState.WIN
         }
 
-        if (word.value.contains(letter, true)) {
-            updateHiddenWord(letter)
-            correctGuesses.add(letter)
+        incorrectAttempts++
+        if (incorrectAttempts >= maxAttempts) {
+            Log.d("HangmanCall", "decrementAttemptsLeft HangmanGame")
+            wordRepository.incrementGameCount()
+            wordRepository.resetAttemptsLeft()
+            return GameState.LOSE
+        }
+        correctGuesses.clear()
+        for (letter in word) {
 
-            if (isWordGuessed()) {
-                wordRepository.incrementVictoryCount()
-                wordRepository.resetAttemptsLeft()
-                return GameState.WIN
-            }
-        } else {
-            incorrectAttempts++
-            if (incorrectAttempts >= maxAttempts) {
-                wordRepository.decrementAttemptsLeft()
-                return GameState.LOSE
+            if (this.word.value.contains(letter, true)) {
+                updateHiddenWord(letter)
+                correctGuesses.add(letter)
             }
         }
         wordRepository.decrementAttemptsLeft()
-
         return GameState.IN_PROGRESS
     }
 
+    private fun isWordGuessed(word: String): Boolean {
+        return word.equals(this.word.value, ignoreCase = true)
+    }
     fun startNewGame(newWord: Word): GameState {
         word = newWord
         actualWord = word.value
@@ -49,10 +55,6 @@ class HangmanGame(private var word: Word)
         correctGuesses.clear()
         incorrectAttempts = 0
         return GameState.IN_PROGRESS
-    }
-
-    private fun isLetterGuessed(letter: Char): Boolean {
-        return correctGuesses.contains(letter)
     }
 
     private fun updateHiddenWord(letter: Char) {
@@ -67,14 +69,10 @@ class HangmanGame(private var word: Word)
         return correctGuesses
     }
 
-    private fun isWordGuessed(): Boolean {
-        return String(hiddenWord) == word.value
-    }
 }
 
 enum class GameState {
     WIN,
     LOSE,
-    IN_PROGRESS,
-    ALREADY_GUESSED
+    IN_PROGRESS
 }

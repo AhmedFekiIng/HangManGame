@@ -10,11 +10,12 @@ class GameController(private val hangmanGame: HangmanGame, private val wordRepos
 
     fun startNewGame(): GameState {
         val newWord = wordRepository.getRandomWord()
+        wordRepository.resetAttemptsLeft()
         return hangmanGame.startNewGame(newWord)
     }
 
-    fun makeGuess(letter: Char): GameState {
-        return hangmanGame.makeGuess(letter, wordRepository)
+    fun makeGuess(word: String): GameState {
+        return hangmanGame.makeGuess(word, wordRepository)
     }
 
     fun getActualWord(): String {
@@ -29,6 +30,10 @@ class GameController(private val hangmanGame: HangmanGame, private val wordRepos
         wordRepository.resetGameCount()
     }
 
+    fun resetVictoryCount() {
+        wordRepository.resetVictoryCount()
+    }
+
     fun getVictoryCount(): Int {
         return wordRepository.getVictoryCount()
     }
@@ -40,8 +45,7 @@ class GameController(private val hangmanGame: HangmanGame, private val wordRepos
     fun getPartialWord(): String {
         val actualWord = hangmanGame.getActualWord()
         val correctGuesses = hangmanGame.getCorrectGuesses()
-        Log.d("Hangman", "Actual Word: $actualWord")
-        Log.d("Hangman", "Correct Guesses: $correctGuesses")
+        Log.d("HangmanCall", "Actual Word: $actualWord")
         return wordRepository.getPartialWord(Word(actualWord), correctGuesses)
     }
 
